@@ -1,6 +1,5 @@
 # lab-week3-aws-cli
 By:
-Raymond Nguyen
+Raymond Nguyen,
 Aaron Dimatulac
-Christian Chanicka
 ---
