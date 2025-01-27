@@ -4,6 +4,9 @@ Raymond Nguyen,
 Aaron Dimatulac
 ---
 
+## Bash Reference
+https://www.gnu.org/software/bash/manual/bash.html
+
 ## Keys
 https://awscli.amazonaws.com/v2/documentation/api/latest/index.html
 https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/import-key-pair.html
