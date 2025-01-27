@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# Check if the number of command-line arguments is correct
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <bucket_name> <aws_profile>"
+    exit 1
+fi
+
+# Pass the bucket name and AWS profile as positional parameters
+bucket_name=$1
+aws_profile=$2
+
+# Get the AWS region for the specified profile
+region=$(aws configure get region --profile "$aws_profile")
+
+# Check if region retrieval succeeded
+if [ -z "$region" ]; then
+    echo "Please configure the region for profile '$aws_profile'."
+    exit 1
+fi
+
+# Check if the bucket exists
+if aws s3api head-bucket --bucket "$bucket_name" --profile "$aws_profile" 2>/dev/null; then
+    echo "Bucket $bucket_name already exists."
+else
+    # Create the bucket with region-specific configuration
+    echo "Creating bucket $bucket_name in region $region using profile '$aws_profile'..."
+    aws s3api create-bucket \
+        --bucket "$bucket_name" \
+        --region "$region" \
+        --create-bucket-configuration LocationConstraint="$region" \
+        --profile "$aws_profile"
+
+    # Check if bucket creation succeeded
+    if [ $? -eq 0 ]; then
+        echo "Bucket $bucket_name created successfully in region $region."
+    else
+        echo "Failed to create bucket $bucket_name."
+        exit 1
+    fi
+fi
