@@ -35,6 +35,7 @@ instance_id=$(aws ec2 run-instances \
 	--security-group-ids $security_group_id \
 	--subnet-id $subnet_id \
 	--associate-public-ip-address \
+	--key-name $key_name \
 	--query 'Instances[0].InstanceId' \
 	--region $region \
 	--output text)
